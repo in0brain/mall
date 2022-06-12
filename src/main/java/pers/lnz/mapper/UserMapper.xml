@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.lnz.mapper.UserMapper">
+    <select id="queryUserByName" parameterType="String" resultType="pers.lnz.entity.User">
+        select * from user where userName=#{userName}
+    </select>
+    <select id="queryUserByEmail" parameterType="String" resultType="pers.lnz.entity.User">
+        select * from user where email=#{email}
+    </select>
+
+    <select id="queryUserByAuthority" parameterType="String" resultType="pers.lnz.entity.User">
+        select * from user where authority=#{authority}
+    </select>
+    <select id="queryMerchantByFuzzyName" parameterType="String" resultType="pers.lnz.entity.User">
+        select * from user where userName like '%${userName}%' and authority='Merchant'
+    </select>
+    <insert id="insertUser" parameterType="pers.lnz.entity.User">
+        insert into user (userName,email,password,img_src,description,authority)
+        values (#{userName},#{email},#{password},#{img_src},#{description},#{authority})
+    </insert>
+    <select id="getAllMerchantsName" resultType="String">
+        select userName
+        from user
+        where authority='Merchant'
+    </select>
+
+    <delete id="deleteUserByName" parameterType="String">
+        delete from user where userName=#{userName}
+    </delete>
+    <delete id="deleteUserByEmail" parameterType="String">
+        delete from user where email=#{email}
+    </delete>
+    <update id="updatePassword" parameterType="pers.lnz.entity.User">
+        update user set password=#{password} where userName =#{userName}
+    </update>
+    <update id="updateEmail" parameterType="pers.lnz.entity.User">
+        update user set email=#{email} where userName =#{userName}
+    </update>
+    <update id="updateImg_src" parameterType="pers.lnz.entity.User">
+        update user set img_src=#{img_src} where userName =#{userName}
+    </update>
+    <update id="updateAuthority" parameterType="pers.lnz.entity.User">
+        update user set authority=#{authority} where userName =#{userName}
+    </update>
+</mapper>

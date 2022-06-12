@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.lnz.mapper.ProductMapper">
+    <select id="queryProductByFuzzyName" parameterType="String" resultType="pers.lnz.entity.Product">
+        select * from products where name like '%${name}%'
+    </select>
+    <select id="queryProductByName" parameterType="String" resultType="pers.lnz.entity.Product">
+        select * from products where name = #{name}
+    </select>
+    <select id="queryProductByKind" parameterType="String" resultType="pers.lnz.entity.Product">
+        select * from products where kind=#{kind}
+    </select>
+
+    <select id="queryAllProduct" resultType="pers.lnz.entity.Product">
+        select * from products
+    </select>
+    <insert id="addProduct" parameterType="pers.lnz.entity.Product">
+        insert into products (id,name,price,kind,message,image_src,merchant_name)
+        values (#{id},#{name},#{price},#{kind},#{message},#{image_src},#{merchantName})
+    </insert>
+    <delete id="deleteProductByName" parameterType="String">
+        delete from products where name=#{name}
+    </delete>
+
+    <select id="getAllKind" resultType="String">
+        select distinct kind from products
+    </select>
+
+    <select id="sumNum" resultType="java.lang.Integer">
+        select count(1)
+        from products
+    </select>
+
+    <select id="queryProductByMerchant" parameterType="String" resultType="pers.lnz.entity.Product">
+        select * from products where merchant_name=#{name}
+    </select>
+    <update id="updateMerchant">
+        update products set merchant_name=#{name} where merchant_name = #{curName}
+    </update>
+
+    <update id="modifyProduct" parameterType="pers.lnz.entity.Product">
+        update products
+        set name=#{name},price=#{price},kind=#{kind},message=#{message},image_src=#{image_src}
+        where id = #{id}
+    </update>
+
+    <select id="queryProductById" resultType="pers.lnz.entity.Product">
+        select * from products where id=#{id}
+    </select>
+</mapper>
